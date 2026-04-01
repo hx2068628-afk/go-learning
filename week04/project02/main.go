@@ -29,7 +29,7 @@ func receive(intChan chan int,overChan chan bool){
 
 
 func main(){
-	intChan :=make(chan int,3)
+	intChan :=make(chan int,1)
 	overChan :=make(chan bool,1)
 	go send(intChan)
 	go receive(intChan,overChan)
@@ -40,5 +40,4 @@ func main(){
 			break
 		}
 	}
-
 }
