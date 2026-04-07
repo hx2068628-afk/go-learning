@@ -1,6 +1,10 @@
 package main
 
-import "github.com/gin-gonic/gin"
+import (
+	"fmt"
+
+	"github.com/gin-gonic/gin"
+)
 
 type Man struct {
 	Name string `json:"name"`
@@ -12,8 +16,10 @@ func main() {
 	r.GET("/", func(c *gin.Context) {
 		c.String(200, "你好12")
 	})
-	r.POST("/add", func(c *gin.Context) {
-		c.JSON(200, &Man{"1", 18})
+	r.GET("/add", func(c *gin.Context) {
+		man := Man{"1", 18}
+		fmt.Printf("%+v", man)
+		c.JSON(200, man)
 	})
 	//query
 	r.GET("/query", func(c *gin.Context) {
