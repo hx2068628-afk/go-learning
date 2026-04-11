@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"log"
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 	_ "github.com/go-sql-driver/mysql"
@@ -54,7 +55,7 @@ func main() {
 		db.QueryRow("select id,name,age from user where id=?", id).Scan(&user.Id, &user.Name, &user.Age)
 		c.String(http.StatusOK, "查询结果为%v", user)
 	})
-	r.POST("api/user", func(c *gin.Context) {
+	r.POST("/api/user", func(c *gin.Context) {
 		var user UserInfo
 		c.ShouldBind(&user)
 		_, err := db.Exec("insert into user (id,name,age) values(?,?,?)", user.Id, user.Name, user.Age)
@@ -62,6 +63,29 @@ func main() {
 			log.Fatal(err)
 		}
 		c.JSON(http.StatusOK, user)
+	})
+	r.PUT("/api/user/:id", func(c *gin.Context) {
+		id := c.Param("id")
+		var user UserInfo
+		c.ShouldBind(&user)
+		user.Id, _ = strconv.Atoi(id)
+		_, err := db.Exec("update user set name=?,age=? where id=?", user.Name, user.Age, user.Id)
+		if err != nil {
+			log.Fatal(err)
+		}
+		c.JSON(http.StatusOK, user)
+	})
+	r.DELETE("/api/user/:id", func(c *gin.Context) {
+		strId := c.Param("id")
+		id, err := strconv.Atoi(strId)
+		if err != nil {
+			log.Fatal(err)
+		}
+		_, err = db.Exec("delete from user where id=?", id)
+		if err != nil {
+			log.Fatal(err)
+		}
+		c.JSON(http.StatusOK, 200)
 	})
 	r.Run()
 
