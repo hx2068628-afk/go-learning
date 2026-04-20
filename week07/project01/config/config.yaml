@@ -1,0 +1,2 @@
+mysql: root:123456@(127.0.0.1:3306)/test?charset=utf8mb4
+redis_addr: localhost:6379
