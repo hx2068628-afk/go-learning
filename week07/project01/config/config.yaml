@@ -1,2 +1,8 @@
-mysql: root:123456@(127.0.0.1:3306)/test?charset=utf8mb4
-redis_addr: localhost:6379
+mysql:
+  dsn: "root:123456@(127.0.0.1:3306)/test?charset=utf8mb4"
+redis:
+  addr: "127.0.0.1:6379"
+  password: ""
+  db: 0
+server:
+  addr: ":8080"

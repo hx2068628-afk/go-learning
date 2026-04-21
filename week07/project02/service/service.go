@@ -43,6 +43,7 @@ func Loginhandler(c *gin.Context) {
 	// c.Header("test", "123")
 	c.JSON(http.StatusOK, gin.H{
 		"code": http.StatusOK,
+		"msg":  "success",
 		"data": s,
 	})
 }
@@ -56,7 +57,7 @@ func Userhandler(c *gin.Context) {
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"code": http.StatusBadRequest,
-			"msg":  "",
+			"msg":  "fail",
 			"data": err.Error(),
 		})
 		return
@@ -67,7 +68,7 @@ func Userhandler(c *gin.Context) {
 		if err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{
 				"code": http.StatusBadRequest,
-				"msg":  "",
+				"msg":  "fail",
 				"data": err.Error(),
 			})
 			return
@@ -87,7 +88,7 @@ func Userhandler(c *gin.Context) {
 	} else {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"code": http.StatusBadRequest,
-			"msg":  "",
+			"msg":  "fail",
 			"data": "token过期了",
 		})
 		return
@@ -99,7 +100,7 @@ func Userhash(c *gin.Context) {
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"code": http.StatusBadRequest,
-			"msg":  "",
+			"msg":  "fail",
 			"data": err.Error(),
 		})
 		return
@@ -107,7 +108,7 @@ func Userhash(c *gin.Context) {
 	if len(res) == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"code": http.StatusBadRequest,
-			"msg":  "",
+			"msg":  "fail",
 			"data": "无数据",
 		})
 		return
