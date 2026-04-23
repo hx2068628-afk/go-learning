@@ -26,6 +26,7 @@ func main() {
 	r.Use(middleware.ZapLogger(logger))
 
 	global.Global()
+	defer global.Db.Close()
 	router.Router(r)
 	r.Run()
 
