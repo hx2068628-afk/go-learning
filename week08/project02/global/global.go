@@ -28,7 +28,14 @@ type Config struct {
 	} `mapstructure:"jwt"`
 }
 
-func Global() (*sql.DB, *redis.Client, *amqp091.Connection) {
+var (
+	Db     *sql.DB
+	Rdb    *redis.Client
+	Cnn    *amqp091.Connection
+	Secret []byte
+)
+
+func Global() {
 	logger, err := zap.NewDevelopment()
 	if err != nil {
 		fmt.Println("zap.logger初始化失败")
@@ -44,18 +51,18 @@ func Global() (*sql.DB, *redis.Client, *amqp091.Connection) {
 	if err != nil {
 		logger.Info("viper解析失败")
 	}
-	db, err := sql.Open("mysql", config.Mysql.Dsn)
+	Db, err = sql.Open("mysql", config.Mysql.Dsn)
 	if err != nil {
 		logger.Info("数据库打开失败")
 	}
-	rdb := redis.NewClient(&redis.Options{
+	Rdb = redis.NewClient(&redis.Options{
 		Addr:     config.Redis.Addr,
 		Password: config.Redis.Password,
 		DB:       config.Redis.Db,
 	})
-	cnn, err := amqp091.Dial(config.RabbitMq.Url)
+	Cnn, err = amqp091.Dial(config.RabbitMq.Url)
 	if err != nil {
 		logger.Info("rabbitmq连接失败")
 	}
-	return db, rdb, cnn
+	Secret = []byte(config.Jwt.Secret)
 }

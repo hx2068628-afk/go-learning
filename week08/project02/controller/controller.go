@@ -9,7 +9,8 @@ import (
 func Controller(r *gin.Engine) {
 	user := r.Group("/user")
 	{
-		user.POST("/login", service.LoginHandler())
-		// user.GET("/hello")
+		user.GET("/login", service.LoginHandler())
+		user.POST("/index", service.IndexHandler())
+		user.GET("/list", service.UserHandler())
 	}
 }

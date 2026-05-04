@@ -1,0 +1,26 @@
+{{define "index"}}
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    {{$a :=3}}
+    <h1>欢迎界面</h1>
+    <h2>{{.account}}欢迎你</h2>
+    <h2>你的auth为</h2>
+    <br>
+    <h3>{{.auth}}    </h3>
+    {{if eq .role 0}}
+        <p>你是管理员</p>
+    {{else}}
+        <p>你是普通用户</p>
+    {{end}}
+    {{if lt $a 2}}
+    <p>a小于2</p>
+    {{else}}
+    <p>a大于等于2</p>
+    {{end}}
+</body>
+</html>
+{{end}}
