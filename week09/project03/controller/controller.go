@@ -6,13 +6,18 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func Controller(r *gin.Engine) {
-	v1 := r.Group("/v1")
-	{
-		v1.GET("/Todo", server.FindAllHandler())
-		v1.GET("/Todo/:id", server.FindOneHandler())
-		v1.POST("/Todo", server.InsertOneHandler())
-		v1.PUT("/Todo/:id", server.UpdateOneHandler())
-		v1.DELETE("Todo/:id", server.DeleteOneHandler())
-	}
+func FindAllHandler() gin.HandlerFunc {
+	return server.FindAllHandler()
+}
+func FindOneHandler() gin.HandlerFunc {
+	return server.FindOneHandler()
+}
+func InsertOneHandler() gin.HandlerFunc {
+	return server.InsertOneHandler()
+}
+func UpdateOneHandler() gin.HandlerFunc {
+	return server.UpdateOneHandler()
+}
+func DeleteOneHandler() gin.HandlerFunc {
+	return server.DeleteOneHandler()
 }
