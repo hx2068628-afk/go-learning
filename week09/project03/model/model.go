@@ -21,6 +21,14 @@ func FindOne(id string) (todo Todo, err error) {
 	err = global.DB.First(&todo, id).Error
 	return
 }
+func FindNameOne(name string) (todo Todo, err error) {
+	err = global.DB.Where("name=?", name).First(&todo).Error
+	return
+}
+func FindPage(page int, limit int, status int) (todolist []Todo, err error) {
+	err = global.DB.Debug().Where("status=?", status).Offset((page - 1) * limit).Limit(limit).Find(&todolist).Error
+	return
+}
 func InsertOne(todo Todo) error {
 	err := global.DB.Debug().Create(&todo).Error
 	return err

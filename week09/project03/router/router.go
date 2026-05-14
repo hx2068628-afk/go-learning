@@ -10,7 +10,9 @@ func Router(r *gin.Engine) {
 	v1 := r.Group("/v1")
 	{
 		v1.GET("/Todo", controller.FindAllHandler())
-		v1.GET("/Todo/:id", controller.FindOneHandler())
+		v1.GET("/Todo/page", controller.FindPageHandler())
+		v1.GET("/Todo/id/:id", controller.FindOneHandler())
+		v1.GET("/Todo/name/:name", controller.FindNameOneHandler())
 		v1.POST("/Todo", controller.InsertOneHandler())
 		v1.PUT("/Todo/:id", controller.UpdateOneHandler())
 		v1.DELETE("Todo/:id", controller.DeleteOneHandler())

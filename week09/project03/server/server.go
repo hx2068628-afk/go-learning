@@ -27,7 +27,31 @@ func FindAllHandler() gin.HandlerFunc {
 		})
 	}
 }
+func FindPageHandler() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		strpage := c.Query("page")
+		strlimit := c.Query("limit")
+		strstatus := c.Query("status")
+		page, _ := strconv.Atoi(strpage)
+		limit, _ := strconv.Atoi(strlimit)
+		status, _ := strconv.Atoi(strstatus)
+		todolist, err := model.FindPage(page, limit, status)
+		if err != nil {
+			c.JSON(http.StatusOK, gin.H{
+				"code": http.StatusOK,
+				"msg":  err.Error(),
+				"data": nil,
+			})
+			return
+		}
+		c.JSON(http.StatusOK, gin.H{
+			"code": http.StatusOK,
+			"msg":  "success",
+			"data": todolist,
+		})
 
+	}
+}
 func FindOneHandler() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		id, ok := c.Params.Get("id")
@@ -54,7 +78,32 @@ func FindOneHandler() gin.HandlerFunc {
 		})
 	}
 }
-
+func FindNameOneHandler() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		name, ok := c.Params.Get("name")
+		if !ok {
+			c.JSON(http.StatusOK, gin.H{
+				"code": http.StatusOK,
+				"msg":  "未找到name",
+				"data": nil,
+			})
+		}
+		todo, err := model.FindNameOne(name)
+		if err != nil {
+			c.JSON(http.StatusOK, gin.H{
+				"code": http.StatusOK,
+				"msg":  err,
+				"data": nil,
+			})
+			return
+		}
+		c.JSON(http.StatusOK, gin.H{
+			"code": http.StatusOK,
+			"msg":  "success",
+			"data": todo,
+		})
+	}
+}
 func InsertOneHandler() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var todo model.Todo

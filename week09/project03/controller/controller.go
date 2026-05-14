@@ -9,8 +9,14 @@ import (
 func FindAllHandler() gin.HandlerFunc {
 	return server.FindAllHandler()
 }
+func FindPageHandler() gin.HandlerFunc {
+	return server.FindPageHandler()
+}
 func FindOneHandler() gin.HandlerFunc {
 	return server.FindOneHandler()
+}
+func FindNameOneHandler() gin.HandlerFunc {
+	return server.FindNameOneHandler()
 }
 func InsertOneHandler() gin.HandlerFunc {
 	return server.InsertOneHandler()
